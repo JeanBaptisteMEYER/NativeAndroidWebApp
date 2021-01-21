@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Native Web App</string>
+    <string name="ble_source_switch">Built-in BLE</string>
+</resources>

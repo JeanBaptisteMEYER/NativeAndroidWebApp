@@ -1,0 +1,31 @@
+<h1>This is a HTML page</h1>
+<p>The HTML file is stored locally and share an API with the Android App</p>
+<p>In this example, the Web APP can control the device's Bluetooth and the Android App can sendback data to be displayed here</p>
+<p>This demonstrate the feasibility to natively run a Web App that have full access to Android's features</p>
+
+<input type="button" value="Start BLE Sniffer" onClick="jsToAndroid('start-rx')" />
+<input type="button" value="Stop BLE Sniffer" onClick="jsToAndroid('stop-rx')" />
+
+<div id="bleData"></div>
+
+<script type="text/javascript">
+    window.androidObj = function AndroidClass(){};
+
+    var text = document.getElementById("bleData");
+
+    //Send commands to Android
+    function jsToAndroid (command) {
+        AndroidInterface.jsToAndroid(command);
+    }
+
+    // Receive commands from Android in a JSON format
+    function androidToJs (message) {
+        // We just receive ble data in a JSON from our Sniffer. Lets display it into our web page
+        var BleData = JSON.parse(decodeURIComponent(message));
+
+        // Append new BLE data to our text
+        var d = new Date()
+        var t = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+        text.innerHTML = "<pre>" + t + "\n" + JSON.stringify(BleData, null, 4) + "</pre>" + "\n" + text.innerHTML;
+    }
+</script>
